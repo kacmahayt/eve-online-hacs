@@ -1,0 +1,11 @@
+{
+  "domain": "eve_online",
+  "name": "EVE Online",
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/custom-components/eve_online",
+  "iot_class": "cloud_polling",
+  "requirements": ["aiohttp>=3.9.0"],
+  "version": "1.0.0"
+}

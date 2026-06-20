@@ -1,0 +1,36 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "EVE Online — Application Credentials",
+        "description": "Enter your ESI application credentials from https://developers.eveonline.com/",
+        "data": {
+          "client_id": "Client ID",
+          "client_secret": "Client Secret"
+        }
+      },
+      "callback": {
+        "title": "Authorize EVE Online",
+        "description": "1. **Click the link below** to authorize with EVE Online:\n\n{auth_url}\n\n2. Log in with your EVE account\n\n3. After authorization, your browser will redirect to **http://localhost/callback** — the page will fail to load (this is normal)\n\n4. **Copy the ENTIRE URL from your browser's address bar** and paste it below",
+        "data": {
+          "callback_url": "Pasted callback URL"
+        }
+      }
+    },
+    "error": {
+      "empty_credentials": "Client ID and Secret are required",
+      "no_callback_url": "Please paste the callback URL",
+      "no_code": "No authorization code found in the URL",
+      "state_mismatch": "State mismatch — possible CSRF attack",
+      "token_failed": "Failed to exchange code for tokens",
+      "token_missing": "Access or refresh token missing",
+      "verify_failed": "Failed to verify character identity",
+      "no_character": "Character ID or name not found",
+      "network": "Network error during OAuth",
+      "unknown": "An unknown error occurred"
+    },
+    "abort": {
+      "already_configured": "This character is already configured"
+    }
+  }
+}
