@@ -105,6 +105,54 @@ entities:
   - sensor.eve_online_eve_system
 ```
 
+## Automations
+
+### Skill queue almost empty
+
+```yaml
+alias: "EVE — Skill Queue Alert"
+triggers:
+  - trigger: numeric_state
+    entity_id: sensor.eve_online_eve_skill_queue
+    below: 2
+actions:
+  - action: notify.persistent_notification
+    data:
+      title: EVE Online
+      message: "Skill queue is running out! Only {{ states('sensor.eve_online_eve_skill_queue') }} skills left."
+```
+
+### Wallet increased
+
+```yaml
+alias: "EVE — Wallet Change"
+triggers:
+  - trigger: state
+    entity_id: sensor.eve_online_eve_wallet
+actions:
+  - action: notify.your_phone
+    data:
+      title: EVE Online
+      message: "Wallet: {{ states('sensor.eve_online_eve_wallet') }} ISK"
+```
+
+## FAQ / Troubleshooting
+
+**Q: The integration shows "Unknown" for ship and system**
+A: You need to be logged into the game. ESI only returns ship/location data when the character is online.
+
+**Q: How often does data update?**
+A: Every 5 minutes. You can change this in `__init__.py` (`update_interval`).
+
+**Q: Can I add multiple characters?**
+A: Yes! Just add the integration again with a different EVE account's Client ID/Secret.
+
+**Q: I get "State mismatch" error**
+A: Generate a new code by re-adding the integration. The state parameter expired.
+
+**Q: Callback URL doesn't work**
+A: Make sure your EVE app has exactly `http://localhost/callback` as the callback URL.
+
 ## Support
 
 - [Create an issue](https://github.com/kacmahayt/eve-online-hacs/issues)

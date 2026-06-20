@@ -1,0 +1,27 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - name: Validate Python syntax
+        run: |
+          python3 -m py_compile custom_components/eve_online/__init__.py
+          python3 -m py_compile custom_components/eve_online/config_flow.py
+          python3 -m py_compile custom_components/eve_online/const.py
+          python3 -m py_compile custom_components/eve_online/sensor.py
+      - name: Validate HACS
+        uses: hacs/action@main
+        with:
+          category: integration
