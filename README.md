@@ -2,6 +2,7 @@
 
 [![HACS Default](https://img.shields.io/badge/HACS-Default-blue.svg)](https://hacs.xyz)
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2026.1+-blueviolet)](https://home-assistant.io)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Monitor your EVE Online character directly from Home Assistant. Track wallet, skills, skill queue, market orders, online status, ship, and location.
 
@@ -83,6 +84,26 @@ Monitor your EVE Online character directly from Home Assistant. Track wallet, sk
 | `sensor.eve_online_eve_ship` | YourShip | Current ship |
 | `sensor.eve_online_eve_system` | YourSystem | Current solar system |
 | `sensor.eve_online_eve_jump_fatigue` | None | Jump clone fatigue |
+
+## Lovelace Example
+
+Add a glance card with entities to your dashboard:
+
+```yaml
+type: entities
+title: EVE Online
+entities:
+  - sensor.eve_online_eve_portrait
+  - sensor.eve_online_eve_character
+  - sensor.eve_online_eve_wallet
+  - sensor.eve_online_eve_total_sp
+  - sensor.eve_online_eve_skill_queue
+  - sensor.eve_online_eve_corporation
+  - sensor.eve_online_eve_security_status
+  - sensor.eve_online_eve_online_status
+  - sensor.eve_online_eve_ship
+  - sensor.eve_online_eve_system
+```
 
 ## Support
 
