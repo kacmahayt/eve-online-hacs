@@ -160,7 +160,14 @@ A: Make sure your EVE app has exactly `http://localhost/callback` as the callbac
 
 ## Donate
 
-If you find this integration useful and want to show appreciation, send ISK to **KaCMaHayT** in EVE Online. o7
+If you find this integration useful, you can support the developer:
+
+| Method | Address |
+|--------|---------|
+| 🪙 **ISK (EVE Online)** | Send to **KaCMaHayT** |
+| ☕ **Buy Me a Coffee** | Coming soon... |
+
+Every ISK is appreciated! Fly safe o7
 
 ---
 
