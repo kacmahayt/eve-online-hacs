@@ -43,7 +43,7 @@ Monitor your EVE Online character directly from Home Assistant. Track wallet, sk
 1. Go to https://developers.eveonline.com/ and log in
 2. Click **CREATE APPLICATION**
 3. Fill in:
-   - **Name**: `EVE Online HA` (any name)
+   - **Name**: any name (e.g. `EVE Online HA`)
    - **Callback URL**: `http://localhost/callback`
    - **Connection Type**: `Authentication & API Access`
 4. Select **Scopes**:
@@ -60,12 +60,14 @@ Monitor your EVE Online character directly from Home Assistant. Track wallet, sk
 
 1. Go to **Settings → Devices & Services**
 2. Click **+ Add Integration** → **EVE Online**
-3. **Client ID is pre-filled** — just paste your **Client Secret**
+3. **Client ID is pre-filled** — optionally paste your **Client Secret** (can leave blank)
 4. Click **Submit**
 5. Click the authorization link, log in with your EVE account
 6. After authorization, your browser will redirect to a page that fails to load (normal!)
 7. **Copy the entire URL** from the browser address bar
 8. Paste it into Home Assistant and click **Submit**
+
+> **Note:** Client Secret is optional. If you don't provide one, the integration uses a secure Cloudflare Worker proxy for OAuth token exchange.
 
 ## Sensors
 

@@ -4,13 +4,17 @@ Config flow for EVE Online integration - manual OAuth2 callback URL paste.
 import asyncio, logging, secrets, hashlib, base64
 from urllib.parse import urlencode, urlparse, parse_qs
 
-import aiohttp
 import voluptuous as vol
+import aiohttp
 
 from homeassistant import config_entries
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import DOMAIN, CONF_CHARACTER_ID, CONF_CLIENT_ID, CONF_CLIENT_SECRET,     CONF_REFRESH_TOKEN, SCOPES, OAUTH_AUTH_URL, OAUTH_TOKEN_URL
+
+# Cloudflare Worker proxy for OAuth token exchange
+# No Client Secret needed - it's stored securely on the proxy
+PROXY_URL = "https://eve-oauth-proxy.sergrudzik.workers.dev"
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -56,7 +60,7 @@ class EVEOnlineConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user",
             data_schema=vol.Schema({
                 vol.Required(CONF_CLIENT_ID, default="7abe9f4cc09d46638138891fc9b077f5"): str,
-                vol.Required(CONF_CLIENT_SECRET): str,
+                vol.Optional(CONF_CLIENT_SECRET, default=""): str,
             }),
             errors=errors,
             description_placeholders={"client_id_hint": "7abe9f4cc09d46638138891fc9b077f5"},
@@ -97,54 +101,41 @@ class EVEOnlineConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
         session = async_get_clientsession(self.hass)
         try:
+            # Use Cloudflare Worker proxy instead of direct token exchange
+            # Client Secret is stored securely on the proxy
             async with session.post(
-                OAUTH_TOKEN_URL,
-                data={
-                    "grant_type": "authorization_code",
+                PROXY_URL + "/exchange",
+                json={
                     "code": auth_code,
                     "code_verifier": self._code_verifier,
-                    "redirect_uri": "http://localhost/callback",
                 },
-                auth=aiohttp.BasicAuth(self._client_id, self._client_secret),
             ) as resp:
                 if resp.status != 200:
                     text = await resp.text()
-                    _LOGGER.error("Token exchange failed: %s", text)
+                    _LOGGER.error("Token exchange via proxy failed: %s", text)
                     errors["base"] = "token_failed"
                 else:
                     token_data = await resp.json()
                     access_token = token_data.get("access_token")
                     refresh_token = token_data.get("refresh_token")
-                    if not access_token or not refresh_token:
+                    char_id = token_data.get("character_id")
+                    char_name = token_data.get("character_name")
+                    if not all([access_token, refresh_token, char_id, char_name]):
                         errors["base"] = "token_missing"
                     else:
-                        async with session.get(
-                            "https://login.eveonline.com/oauth/verify",
-                            headers={"Authorization": f"Bearer {access_token}"},
-                        ) as vrfy:
-                            if vrfy.status != 200:
-                                _LOGGER.error("Verify failed: %s", await vrfy.text())
-                                errors["base"] = "verify_failed"
-                            else:
-                                char_data = await vrfy.json()
-                                char_id = char_data.get("CharacterID")
-                                char_name = char_data.get("CharacterName")
-                                if not char_id or not char_name:
-                                    errors["base"] = "no_character"
-                                else:
-                                    await self.async_set_unique_id(str(char_id))
-                                    self._abort_if_unique_id_configured()
-                                    return self.async_create_entry(
-                                        title=f"EVE Online - {char_name}",
-                                        data={
-                                            CONF_CLIENT_ID: self._client_id,
-                                            CONF_CLIENT_SECRET: self._client_secret,
-                                            CONF_CHARACTER_ID: char_id,
-                                            CONF_REFRESH_TOKEN: refresh_token,
-                                            "access_token": access_token,
-                                            "character_name": char_name,
-                                        },
-                                    )
+                        await self.async_set_unique_id(str(char_id))
+                        self._abort_if_unique_id_configured()
+                        return self.async_create_entry(
+                            title=f"EVE Online - {char_name}",
+                            data={
+                                CONF_CLIENT_ID: self._client_id,
+                                CONF_CLIENT_SECRET: self._client_secret or "",
+                                CONF_CHARACTER_ID: char_id,
+                                CONF_REFRESH_TOKEN: refresh_token,
+                                "access_token": access_token,
+                                "character_name": char_name,
+                            },
+                        )
         except aiohttp.ClientError as err:
             _LOGGER.exception("Network error: %s", err)
             errors["base"] = "network"
