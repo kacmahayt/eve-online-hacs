@@ -25,7 +25,7 @@ Monitor your EVE Online character directly from Home Assistant. Track wallet, sk
 
 1. Open HACS in Home Assistant
 2. Go to **Integrations** → **Custom Repositories**
-3. Add `https://github.com/YOUR_USERNAME/eve-online-hacs` as type **Integration**
+3. Add `https://github.com/kacmahayt/eve-online-hacs` as type **Integration**
 4. Click **Install**
 5. Restart Home Assistant
 
@@ -86,7 +86,7 @@ Monitor your EVE Online character directly from Home Assistant. Track wallet, sk
 
 ## Support
 
-- [Create an issue](https://github.com/YOUR_USERNAME/eve-online-hacs/issues)
+- [Create an issue](https://github.com/kacmahayt/eve-online-hacs/issues)
 - CCP Games: [EVE Online Developer Portal](https://developers.eveonline.com/)
 
 ---
