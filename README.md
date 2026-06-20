@@ -38,16 +38,15 @@ Monitor your EVE Online character directly from Home Assistant. Track wallet, sk
 
 ## Setup
 
-### 1. Create an EVE Online application
+### 1. Get API credentials
 
 1. Go to https://developers.eveonline.com/ and log in
 2. Click **CREATE APPLICATION**
 3. Fill in:
-   - **Name**: `EVE Online Home Assistant` (or any name)
-   - **Description**: Brief description
-   - **Connection Type**: `Authentication & API Access`
+   - **Name**: `EVE Online HA` (any name)
    - **Callback URL**: `http://localhost/callback`
-4. Select these **Scopes**:
+   - **Connection Type**: `Authentication & API Access`
+4. Select **Scopes**:
    - `esi-skills.read_skills.v1`
    - `esi-skills.read_skillqueue.v1`
    - `esi-wallet.read_character_wallet.v1`
@@ -55,19 +54,18 @@ Monitor your EVE Online character directly from Home Assistant. Track wallet, sk
    - `esi-location.read_online.v1`
    - `esi-location.read_location.v1`
    - `esi-location.read_ship_type.v1`
-5. Save and copy your **Client ID** and **Client Secret**
+5. Save and copy your **Client Secret**
 
 ### 2. Add Integration
 
 1. Go to **Settings → Devices & Services**
-2. Click **+ Add Integration**
-3. Search for **EVE Online**
-4. Enter your **Client ID** and **Client Secret**
-5. Click **Submit**
-6. Click the authorization link, log in with your EVE account
-7. After authorization, your browser will redirect to a page that fails to load (normal!)
-8. **Copy the entire URL** from the browser address bar
-9. Paste it into Home Assistant and click **Submit**
+2. Click **+ Add Integration** → **EVE Online**
+3. **Client ID is pre-filled** — just paste your **Client Secret**
+4. Click **Submit**
+5. Click the authorization link, log in with your EVE account
+6. After authorization, your browser will redirect to a page that fails to load (normal!)
+7. **Copy the entire URL** from the browser address bar
+8. Paste it into Home Assistant and click **Submit**
 
 ## Sensors
 

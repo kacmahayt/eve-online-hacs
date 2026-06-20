@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "EVE Online — Application Credentials",
-        "description": "Enter your ESI application credentials from https://developers.eveonline.com/",
+        "description": "Enter your EVE Online application credentials.\n\n**Client ID is pre-filled** — just enter your Client Secret.\n\nIf you haven't created an app yet:\n1. Go to https://developers.eveonline.com/\n2. Click **Create Application**\n3. Set **Callback URL**: http://localhost/callback\n4. Select scopes: esi-skills.read_skills.v1, esi-skills.read_skillqueue.v1, esi-wallet.read_character_wallet.v1, esi-markets.read_character_orders.v1, esi-location.read_online.v1, esi-location.read_location.v1, esi-location.read_ship_type.v1\n5. Copy your **Client ID** and **Client Secret**",
         "data": {
           "client_id": "Client ID",
           "client_secret": "Client Secret"

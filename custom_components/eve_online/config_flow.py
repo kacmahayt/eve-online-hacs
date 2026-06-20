@@ -55,10 +55,11 @@ class EVEOnlineConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema({
-                vol.Required(CONF_CLIENT_ID): str,
+                vol.Required(CONF_CLIENT_ID, default="7abe9f4cc09d46638138891fc9b077f5"): str,
                 vol.Required(CONF_CLIENT_SECRET): str,
             }),
             errors=errors,
+            description_placeholders={"client_id_hint": "7abe9f4cc09d46638138891fc9b077f5"},
         )
 
     async def async_step_callback(self, user_input=None):
