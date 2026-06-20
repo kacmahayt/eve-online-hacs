@@ -19,6 +19,7 @@ Monitor your EVE Online character directly from Home Assistant. Track wallet, sk
 - **Ship** — current ship name & type
 - **System** — current solar system location
 - **Jump Fatigue** — remaining fatigue time
+- **Account Status** — Omega or Alpha detection
 
 ## Installation
 
@@ -84,6 +85,7 @@ Monitor your EVE Online character directly from Home Assistant. Track wallet, sk
 | `sensor.eve_online_eve_ship` | YourShip | Current ship |
 | `sensor.eve_online_eve_system` | YourSystem | Current solar system |
 | `sensor.eve_online_eve_jump_fatigue` | None | Jump clone fatigue |
+| `sensor.eve_online_eve_account_status` | Omega | Omega/Alpha account status |
 
 ## Lovelace Example
 
@@ -103,6 +105,7 @@ entities:
   - sensor.eve_online_eve_online_status
   - sensor.eve_online_eve_ship
   - sensor.eve_online_eve_system
+  - sensor.eve_online_eve_account_status
 ```
 
 ## Automations
@@ -165,7 +168,7 @@ If you find this integration useful, you can support the developer:
 | Method | Address |
 |--------|---------|
 | 🪙 **ISK (EVE Online)** | Send to **KaCMaHayT** |
-| ☕ **Buy Me a Coffee** | Coming soon... |
+| 🚀 **Boosty** | [boosty.to/kacmahayt](https://boosty.to/kacmahayt) |
 
 Every ISK is appreciated! Fly safe o7
 

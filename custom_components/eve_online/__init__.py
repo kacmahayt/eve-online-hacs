@@ -166,6 +166,20 @@ class EVEOnlineCoordinator(DataUpdateCoordinator):
             if fatigue is not None:
                 data["fatigue"] = fatigue
 
+            # Clones (for Omega status detection)
+            clones = await self._esi_request(
+                f"/characters/{self.character_id}/clones/", headers
+            )
+            if clones is not None:
+                data["clones"] = clones
+
+            # Implants (for Omega status detection)
+            implants = await self._esi_request(
+                f"/characters/{self.character_id}/implants/", headers
+            )
+            if implants is not None:
+                data["implants"] = implants
+
         except Exception as err:
             raise UpdateFailed(f"Error communicating with ESI: {err}")
 

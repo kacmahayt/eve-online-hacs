@@ -27,6 +27,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         EVEShipSensor(coordinator),
         EVESystemSensor(coordinator),
         EVEFatigueSensor(coordinator),
+        EVEOmegaSensor(coordinator),
     ]
 
     async_add_entities(entities)
@@ -418,4 +419,41 @@ class EVEFatigueSensor(EVEBaseSensor):
         return {
             "jump_fatigue_expire_date": fatigue.get("jump_fatigue_expire_date", ""),
             "last_jump_date": fatigue.get("last_jump_date", ""),
+        }
+
+
+class EVEOmegaSensor(EVEBaseSensor):
+    """Omega/Alpha status sensor."""
+
+    _attr_name = "EVE Account Status"
+    _attr_icon = "mdi:crown"
+
+    def __init__(self, coordinator):
+        super().__init__(coordinator)
+        self._attr_unique_id = f"{coordinator.character_id}_omega"
+
+    @property
+    def native_value(self):
+        implants = self.coordinator.data.get("implants", [])
+        clones = self.coordinator.data.get("clones", {})
+        jc = clones.get("jump_clones", [])
+
+        # Omega has implants or multiple jump clones
+        if implants and len(implants) > 0:
+            return "Omega"
+        if len(jc) > 1:
+            return "Omega"
+        # Alpha if we have data but no Omega signs
+        if implants is not None and clones is not None:
+            return "Alpha"
+        return "Unknown"
+
+    @property
+    def extra_state_attributes(self):
+        implants = self.coordinator.data.get("implants", [])
+        clones = self.coordinator.data.get("clones", {})
+        jc = clones.get("jump_clones", [])
+        return {
+            "implants_count": len(implants) if implants else 0,
+            "jump_clones_count": len(jc) if jc else 0,
         }
