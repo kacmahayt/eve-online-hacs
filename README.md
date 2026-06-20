@@ -71,23 +71,27 @@ Monitor your EVE Online character directly from Home Assistant. Track wallet, sk
 
 | Entity | Example Value | Description |
 |--------|--------------|-------------|
-| `sensor.eve_online_eve_character` | FrenkusSinatrus | Character name |
-| `sensor.eve_online_eve_portrait` | FrenkusSinatrus | Character portrait + name |
-| `sensor.eve_online_eve_wallet` | 2300075383.99 | ISK balance |
-| `sensor.eve_online_eve_total_sp` | 134778864 | Total skill points |
+| `sensor.eve_online_eve_character` | YourCharacter | Character name |
+| `sensor.eve_online_eve_portrait` | YourCharacter | Character portrait + name |
+| `sensor.eve_online_eve_wallet` | 1000000000.00 | ISK balance |
+| `sensor.eve_online_eve_total_sp` | 50000000 | Total skill points |
 | `sensor.eve_online_eve_skill_queue` | 3 | Skills in queue |
 | `sensor.eve_online_eve_market_orders` | 0 | Active market orders |
-| `sensor.eve_online_eve_corporation` | Dream RuCorp inc. | Corporation name |
+| `sensor.eve_online_eve_corporation` | YourCorp | Corporation name |
 | `sensor.eve_online_eve_security_status` | 5.0 | Security status |
 | `sensor.eve_online_eve_online_status` | False | Online/Offline |
-| `sensor.eve_online_eve_ship` | Rook | Current ship |
-| `sensor.eve_online_eve_system` | Jita | Current solar system |
+| `sensor.eve_online_eve_ship` | YourShip | Current ship |
+| `sensor.eve_online_eve_system` | YourSystem | Current solar system |
 | `sensor.eve_online_eve_jump_fatigue` | None | Jump clone fatigue |
 
 ## Support
 
 - [Create an issue](https://github.com/kacmahayt/eve-online-hacs/issues)
 - CCP Games: [EVE Online Developer Portal](https://developers.eveonline.com/)
+
+## Donate
+
+If you find this integration useful and want to show appreciation, send ISK to **KaCMaHayT** in EVE Online. o7
 
 ---
 
