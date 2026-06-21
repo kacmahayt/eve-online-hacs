@@ -166,19 +166,12 @@ class EVEOnlineCoordinator(DataUpdateCoordinator):
             if fatigue is not None:
                 data["fatigue"] = fatigue
 
-            # Clones (for Omega status detection)
-            clones = await self._esi_request(
-                f"/characters/{self.character_id}/clones/", headers
+            # Mail headers (last 20 for inbox count + preview)
+            mail = await self._esi_request(
+                f"/characters/{self.character_id}/mail/", headers
             )
-            if clones is not None:
-                data["clones"] = clones
-
-            # Implants (for Omega status detection)
-            implants = await self._esi_request(
-                f"/characters/{self.character_id}/implants/", headers
-            )
-            if implants is not None:
-                data["implants"] = implants
+            if mail is not None:
+                data["mail"] = mail
 
         except Exception as err:
             raise UpdateFailed(f"Error communicating with ESI: {err}")
@@ -204,20 +197,43 @@ class EVEOnlineCoordinator(DataUpdateCoordinator):
 
     async def _refresh_access_token(self):
         """Refresh OAuth2 access token."""
-        async with self.session.post(
-            "https://login.eveonline.com/v2/oauth/token",
+        if self.client_secret:
+            # Direct refresh with Client Secret
+            async with self.session.post(
+                "https://login.eveonline.com/v2/oauth/token",
+                data={
+                    "grant_type": "refresh_token",
+                    "refresh_token": self.refresh_token,
+                },
+                auth=aiohttp.BasicAuth(self.client_id, self.client_secret),
+            ) as resp:
+                if resp.status != 200:
+                    raise UpdateFailed("Failed to refresh access token")
+                token_data = await resp.json()
+                self.access_token = token_data["access_token"]
+        else:
+            # Proxy refresh via Cloudflare Worker
+            proxy_url = "https://eve-oauth-proxy.sergrudzik.workers.dev"
+            async with self.session.post(
+                proxy_url + "/refresh",
+                json={"refresh_token": self.refresh_token},
+            ) as resp:
+                if resp.status != 200:
+                    text = await resp.text()
+                    raise UpdateFailed(f"Failed to refresh token via proxy: {text}")
+                token_data = await resp.json()
+                self.access_token = token_data["access_token"]
+                # Update refresh_token if proxy returned a new one
+                new_refresh = token_data.get("refresh_token")
+                if new_refresh:
+                    self.refresh_token = new_refresh
+
+        # Update config entry with new tokens
+        self.hass.config_entries.async_update_entry(
+            self.entry,
             data={
-                "grant_type": "refresh_token",
+                **self.entry.data,
+                "access_token": self.access_token,
                 "refresh_token": self.refresh_token,
             },
-            auth=aiohttp.BasicAuth(self.client_id, self.client_secret),
-        ) as resp:
-            if resp.status != 200:
-                raise UpdateFailed("Failed to refresh access token")
-            token_data = await resp.json()
-            self.access_token = token_data["access_token"]
-            # Update config entry with new token
-            self.hass.config_entries.async_update_entry(
-                self.entry,
-                data={**self.entry.data, "access_token": self.access_token},
-            )
+        )

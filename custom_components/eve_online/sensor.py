@@ -27,6 +27,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         EVEShipSensor(coordinator),
         EVESystemSensor(coordinator),
         EVEFatigueSensor(coordinator),
+        EVEMailSensor(coordinator),
     ]
 
     async_add_entities(entities)
@@ -455,4 +456,41 @@ class EVEOmegaSensor(EVEBaseSensor):
         return {
             "implants_count": len(implants) if implants else 0,
             "jump_clones_count": len(jc) if jc else 0,
+        }
+
+
+class EVEMailSensor(EVEBaseSensor):
+    """Mail inbox sensor — unread count + previews."""
+
+    _attr_name = "EVE Mail"
+    _attr_icon = "mdi:email"
+
+    def __init__(self, coordinator):
+        super().__init__(coordinator)
+        self._attr_unique_id = f"{coordinator.character_id}_mail"
+
+    @property
+    def native_value(self):
+        mail = self.coordinator.data.get("mail", [])
+        unread = [m for m in mail if not m.get("is_read", True)]
+        return len(unread)
+
+    @property
+    def extra_state_attributes(self):
+        mail = self.coordinator.data.get("mail", [])
+        unread = [m for m in mail if not m.get("is_read", True)]
+        total = len(mail)
+        # Last 5 messages preview
+        recent = []
+        for m in sorted(mail, key=lambda x: x.get("timestamp", ""), reverse=True)[:5]:
+            recent.append({
+                "subject": m.get("subject", "(No subject)"),
+                "from": m.get("from", 0),
+                "timestamp": m.get("timestamp", ""),
+                "is_read": m.get("is_read", True),
+            })
+        return {
+            "total": total,
+            "unread": len(unread),
+            "recent": recent,
         }

@@ -12,7 +12,8 @@ ESI_BASE = "https://esi.evetech.net/latest"
 # Config entry keys
 CONF_CHARACTER_ID = "character_id"
 CONF_CLIENT_ID = "client_id"
-CONF_CLIENT_SECRET = "client_secret"  # placeholder
+CONF_CLIENT_SECRET = "client_secret"
+CONF_REFRESH_TOKEN = "refresh_token"
 
 # Required ESI scopes
 SCOPES = [
@@ -23,4 +24,5 @@ SCOPES = [
     "esi-location.read_online.v1",
     "esi-location.read_location.v1",
     "esi-location.read_ship_type.v1",
+    "esi-mail.read_mail.v1",
 ]

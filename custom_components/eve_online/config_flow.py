@@ -34,7 +34,7 @@ class EVEOnlineConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             self._client_id = user_input[CONF_CLIENT_ID].strip()
             self._client_secret = user_input[CONF_CLIENT_SECRET].strip()
-            if not self._client_id or not self._client_secret:
+            if not self._client_id:
                 errors["base"] = "empty_credentials"
             else:
                 self._code_verifier = base64.urlsafe_b64encode(

@@ -18,7 +18,7 @@ Monitor your EVE Online character directly from Home Assistant. Track wallet, sk
 - **Online Status** — online/offline + last login/logout
 - **Ship** — current ship name & type
 - **System** — current solar system location
-- **Jump Fatigue** — remaining fatigue time
+- **Mail** — unread mail count + latest messages preview
 
 ## Installation
 
@@ -53,6 +53,7 @@ Monitor your EVE Online character directly from Home Assistant. Track wallet, sk
    - `esi-location.read_online.v1`
    - `esi-location.read_location.v1`
    - `esi-location.read_ship_type.v1`
+   - `esi-mail.read_mail.v1`
 5. Save and copy your **Client Secret**
 
 ### 2. Add Integration
@@ -84,6 +85,7 @@ Monitor your EVE Online character directly from Home Assistant. Track wallet, sk
 | `sensor.eve_online_eve_ship` | YourShip | Current ship |
 | `sensor.eve_online_eve_system` | YourSystem | Current solar system |
 | `sensor.eve_online_eve_jump_fatigue` | None | Jump clone fatigue |
+| `sensor.eve_online_eve_mail` | 2 | Unread mail count |
 
 ## Lovelace Example
 
@@ -103,6 +105,7 @@ entities:
   - sensor.eve_online_eve_online_status
   - sensor.eve_online_eve_ship
   - sensor.eve_online_eve_system
+  - sensor.eve_online_eve_mail
 ```
 
 ## Automations
@@ -157,6 +160,7 @@ A: Make sure your EVE app has exactly `http://localhost/callback` as the callbac
 
 - [Create an issue](https://github.com/kacmahayt/eve-online-hacs/issues)
 - CCP Games: [EVE Online Developer Portal](https://developers.eveonline.com/)
+- [Changelog](CHANGELOG.md)
 
 ## Donate
 
