@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVE Online for Home Assistant — Dashboard Gallery</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0a0a0f; color:#e0e0e0; font-family:Inter,sans-serif; }
+header { text-align:center; padding:60px 20px 40px; border-bottom:1px solid #1a1a2e; }
+header h1 { font-size:2.5em; background:linear-gradient(135deg,#30b2e6,#5ccbcb); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:10px; }
+header p { color:#888; max-width:600px; margin:0 auto; line-height:1.6; }
+.gallery { max-width:1200px; margin:0 auto; padding:40px 20px; display:grid; grid-template-columns:repeat(auto-fit,minmax(350px,1fr)); gap:24px; }
+.card { background:#14161a; border-radius:12px; border:1px solid #1e2030; overflow:hidden; transition:border-color .3s; }
+.card:hover { border-color:#30b2e6; }
+.card-header { padding:16px 20px; border-bottom:1px solid #1e2030; display:flex; align-items:center; gap:10px; }
+.card-header .icon { font-size:1.5em; }
+.card-header h2 { font-size:1em; font-weight:600; }
+.card-header .badge { margin-left:auto; font-size:0.75em; background:#1a1a2e; padding:3px 10px; border-radius:20px; color:#888; }
+.card-preview { padding:20px; min-height:200px; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:13px; line-height:1.5; }
+.card-preview.terminal { background:#0a0a0a; color:#00ff41; justify-content:flex-start; }
+.card-preview.overview { background:linear-gradient(135deg,#14161a,#1a1a2e); }
+.card-preview.neon { background:linear-gradient(135deg,#0d0020,#1a0050); color:#a78bfa; }
+.card-preview.dossier { background:#1a1a2e; color:#e0e0e0; font-family:Georgia,serif; }
+.card-preview.retro { background:linear-gradient(180deg,#0a0a2e,#1a0a3e); color:#ff6ec7; }
+.card-preview.elite { background:#0a0a0a; color:#0f0; }
+.card-footer { padding:12px 20px; border-top:1px solid #1e2030; }
+.card-footer code { font-family:'JetBrains Mono',monospace; font-size:0.8em; color:#5ccbcb; word-break:break-all; }
+.cta { text-align:center; padding:60px 20px; }
+.cta a { display:inline-block; background:linear-gradient(135deg,#30b2e6,#5ccbcb); color:#0a0a0f; padding:14px 32px; border-radius:8px; text-decoration:none; font-weight:600; font-size:1.1em; }
+.cta a:hover { opacity:0.9; }
+.cta p { margin-top:15px; color:#666; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🚀 EVE Online for Home Assistant</h1>
+  <p>10 уникальных дизайнов дашборда для мониторинга твоего EVE персонажа. <br>Выбери стиль, скопируй JSON — и готово.</p>
+</header>
+
+<div class="gallery">
+
+  <!-- 1 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">👤</span><h2>Overview</h2><span class="badge">tab</span></div>
+    <div class="card-preview overview" style="flex-direction:column;gap:8px">
+      <img src="https://images.evetech.net/characters/1500215316/portrait?size=128" style="border-radius:50%;border:2px solid #30b2e6;max-width:64px">
+      <div style="color:#30b2e6;font-weight:bold">FrenkusSinatrus</div>
+      <div style="color:#8dc169;font-size:0.85em">Dream RuCorp inc.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;width:100%">
+        <div style="text-align:center;padding:6px;background:#1a1a2e;border-radius:4px"><div style="color:#f4f7f8;font-weight:bold">2.3B</div><div style="color:#666;font-size:0.7em">ISK</div></div>
+        <div style="text-align:center;padding:6px;background:#1a1a2e;border-radius:4px"><div style="color:#f4f7f8;font-weight:bold">135M</div><div style="color:#666;font-size:0.7em">SP</div></div>
+      </div>
+    </div>
+    <div class="card-footer"><code>/dashboard-eve?tab=overview</code></div>
+  </div>
+
+  <!-- 6 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">💻</span><h2>Terminal</h2><span class="badge">tab</span></div>
+    <div class="card-preview terminal" style="flex-direction:column;align-items:flex-start;gap:2px">
+      <div>EVE ONLINE  v2.0.4</div>
+      <div>CONNECTION: ESTABLISHED</div>
+      <div style="color:#333">━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
+      <div>NAME:    Valentti Buelle</div>
+      <div>CORP:    OuterCorporation</div>
+      <div>STATUS:  OFFLINE</div>
+      <div style="color:#333">━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
+      <div style="color:#0f0">&gt;&gt; DATA RETRIEVED &lt;&lt;</div>
+    </div>
+    <div class="card-footer"><code>/dashboard-eve?tab=terminal</code></div>
+  </div>
+
+  <!-- 7 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">🔮</span><h2>Hologram</h2><span class="badge">tab</span></div>
+    <div class="card-preview neon" style="flex-direction:column;gap:4px">
+      <div style="font-size:0.7em;color:#30b2e6;letter-spacing:3px">CHARACTER SCAN</div>
+      <img src="https://images.evetech.net/characters/1500215316/portrait?size=64" style="border-radius:50%;border:1px solid rgba(48,178,230,0.3);max-width:48px">
+      <div style="font-weight:bold">Valentti Buelle</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;margin-top:4px">
+        <div style="text-align:center;padding:4px;background:rgba(48,178,230,0.08);border-radius:4px"><div style="color:#7dd3fc">84.8M</div><div style="color:#64748b;font-size:0.7em">ISK</div></div>
+        <div style="text-align:center;padding:4px;background:rgba(48,178,230,0.08);border-radius:4px"><div style="color:#7dd3fc">11.5M</div><div style="color:#64748b;font-size:0.7em">SP</div></div>
+      </div>
+    </div>
+    <div class="card-footer"><code>/dashboard-eve?tab=hologram</code></div>
+  </div>
+
+  <!-- 8 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">📂</span><h2>Dossier</h2><span class="badge">tab</span></div>
+    <div class="card-preview dossier" style="flex-direction:column;gap:3px;align-items:flex-start">
+      <div style="color:#c41e3a;font-size:0.7em;letter-spacing:2px">TOP SECRET</div>
+      <div style="font-size:1.1em;font-weight:bold">Valentti Buelle</div>
+      <table style="width:100%;font-size:0.8em;margin-top:4px">
+        <tr><td style="color:#c41e3a">AFFILIATION</td><td style="text-align:right">OuterCorporation</td></tr>
+        <tr><td style="color:#c41e3a">STATUS</td><td style="text-align:right;color:#f44">OFFLINE</td></tr>
+        <tr><td style="color:#c41e3a">ASSETS</td><td style="text-align:right;color:#8dc169">84.8M ISK</td></tr>
+      </table>
+    </div>
+    <div class="card-footer"><code>/dashboard-eve?tab=dossier</code></div>
+  </div>
+
+  <!-- 9 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">🌴</span><h2>RetroWave</h2><span class="badge">tab</span></div>
+    <div class="card-preview retro" style="flex-direction:column;gap:4px">
+      <img src="https://images.evetech.net/characters/1500215316/portrait?size=64" style="border:2px solid #ff6ec7;max-width:48px;filter:hue-rotate(300deg)">
+      <div style="font-weight:bold;text-shadow:0 0 10px rgba(255,110,199,0.5)">Valentti Buelle</div>
+      <div style="color:#00ffff;font-size:0.8em;letter-spacing:2px">OuterCorporation</div>
+      <div style="display:flex;gap:10px;margin-top:4px;font-size:0.8em">
+        <div><div style="color:#ff6ec7">84.8M</div><div style="color:#666">ISK</div></div>
+        <div><div style="color:#0ff">11.5M</div><div style="color:#666">SP</div></div>
+      </div>
+    </div>
+    <div class="card-footer"><code>/dashboard-eve?tab=retro</code></div>
+  </div>
+
+  <!-- 10 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">🛸</span><h2>Elite</h2><span class="badge">tab</span></div>
+    <div class="card-preview elite" style="flex-direction:column;align-items:flex-start;gap:2px">
+      <div>ELITE STATION v3.1</div>
+      <div>SCANNING SECTOR 7G</div>
+      <div style="color:#333">━━━━━━━━━━━━━━━━━━━━━━━━</div>
+      <div>  /\\</div>
+      <div> /  \\    /\\</div>
+      <div>/    \\  /  \\</div>
+      <div>\\    /  \\  /</div>
+      <div> \\  /    \\/</div>
+      <div>  \\/</div>
+      <div style="color:#333">━━━━━━━━━━━━━━━━━━━━━━━━</div>
+      <div>NAME:  Valentti Buelle</div>
+      <div>RATING: COMBAT 3.34</div>
+    </div>
+    <div class="card-footer"><code>/dashboard-eve?tab=elite</code></div>
+  </div>
+
+</div>
+
+<div class="cta">
+  <a href="#">📦 GitHub Repo</a>
+  <p>Установи через HACS: добавь репозиторий kacmahayt/eve-online-hacs</p>
+</div>
+
+</body>
+</html>
