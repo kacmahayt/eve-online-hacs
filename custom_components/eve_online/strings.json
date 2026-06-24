@@ -1,36 +1,23 @@
 {
   "config": {
     "step": {
-      "user": {
-        "title": "EVE Online — Application Credentials",
-        "description": "Enter your EVE Online application credentials.\n\n**Client ID is pre-filled**.\n\n**Client Secret is optional** — if you leave it blank, the integration uses a secure Cloudflare Worker proxy for OAuth.\n\nIf you want to provide your own credentials:\n1. Go to https://developers.eveonline.com/\n2. Create Application → Callback URL: https://eve-oauth-proxy.sergrudzik.workers.dev/callback\n3. Select scopes (see README)\n4. Copy Client Secret here",
-        "data": {
-          "client_id": "Client ID",
-          "client_secret": "Client Secret"
-        }
-      },
       "callback": {
         "title": "Authorize EVE Online",
-        "description": "1. **Click the link below** to authorize with EVE Online:\n\n{auth_url}\n\n2. Log in with your EVE account\n\n3. After authorization, your browser will redirect to **https://eve-oauth-proxy.sergrudzik.workers.dev/callback** — you will see a success page\n\n4. **Copy the ENTIRE URL from your browser's address bar** and paste it below",
+        "description": "1. **Click the link below** to authorize with EVE Online:\n\n{auth_url}\n\n2. Log in with your EVE account\n\n3. After authorization, you will be redirected to a success page\n\n4. **Copy the ENTIRE URL from your browser's address bar** and paste it below",
         "data": {
           "callback_url": "Pasted callback URL"
         }
       }
     },
     "error": {
-      "empty_credentials": "Client ID and Secret are required",
       "no_callback_url": "Please paste the callback URL",
-      "no_code": "No authorization code found in the URL",
-      "state_mismatch": "State mismatch — possible CSRF attack",
-      "token_failed": "Failed to exchange code for tokens",
-      "token_missing": "Access or refresh token missing",
-      "verify_failed": "Failed to verify character identity",
-      "no_character": "Character ID or name not found",
-      "network": "Network error during OAuth",
-      "unknown": "An unknown error occurred"
-    },
-    "abort": {
-      "already_configured": "This character is already configured"
+      "no_code": "No authorization code found in URL",
+      "state_mismatch": "Security state mismatch. Please try again",
+      "auth_failed": "Authorization was denied or failed",
+      "exchange_failed": "Failed to exchange code for tokens. The proxy server may be unavailable.",
+      "verify_failed": "Failed to verify character identity with EVE",
+      "network_error": "Network error communicating with the proxy server",
+      "unknown": "An unexpected error occurred. Check the logs for details."
     }
   }
 }

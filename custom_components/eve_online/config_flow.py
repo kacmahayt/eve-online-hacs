@@ -30,41 +30,26 @@ class EVEOnlineConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self._auth_url = None
 
     async def async_step_user(self, user_input=None):
-        errors = {}
-        if user_input is not None:
-            self._client_id = user_input[CONF_CLIENT_ID].strip()
-            self._client_secret = user_input[CONF_CLIENT_SECRET].strip()
-            if not self._client_id:
-                errors["base"] = "empty_credentials"
-            else:
-                self._code_verifier = base64.urlsafe_b64encode(
-                    secrets.token_bytes(32)
-                ).decode().rstrip("=")
-                code_challenge = base64.urlsafe_b64encode(
-                    hashlib.sha256(self._code_verifier.encode()).digest()
-                ).decode().rstrip("=")
-                self._state = secrets.token_urlsafe(16)
-                params = {
-                    "response_type": "code",
-                    "client_id": self._client_id,
-                    "redirect_uri": "https://eve-oauth-proxy.sergrudzik.workers.dev/callback",
-                    "scope": " ".join(SCOPES),
-                    "state": self._state,
-                    "code_challenge": code_challenge,
-                    "code_challenge_method": "S256",
-                }
-                self._auth_url = OAUTH_AUTH_URL + "?" + urlencode(params)
-                return await self.async_step_callback()
-
-        return self.async_show_form(
-            step_id="user",
-            data_schema=vol.Schema({
-                vol.Required(CONF_CLIENT_ID, default="7abe9f4cc09d46638138891fc9b077f5"): str,
-                vol.Optional(CONF_CLIENT_SECRET, default=""): str,
-            }),
-            errors=errors,
-            description_placeholders={"client_id_hint": "7abe9f4cc09d46638138891fc9b077f5"},
-        )
+        """Step 1: Generate auth URL and go directly to callback."""
+        self._client_id = "7abe9f4cc09d46638138891fc9b077f5"
+        self._code_verifier = base64.urlsafe_b64encode(
+            secrets.token_bytes(32)
+        ).decode().rstrip("=")
+        code_challenge = base64.urlsafe_b64encode(
+            hashlib.sha256(self._code_verifier.encode()).digest()
+        ).decode().rstrip("=")
+        self._state = secrets.token_urlsafe(16)
+        params = {
+            "response_type": "code",
+            "client_id": self._client_id,
+            "redirect_uri": "https://eve-oauth-proxy.sergrudzik.workers.dev/callback",
+            "scope": " ".join(SCOPES),
+            "state": self._state,
+            "code_challenge": code_challenge,
+            "code_challenge_method": "S256",
+        }
+        self._auth_url = OAUTH_AUTH_URL + "?" + urlencode(params)
+        return await self.async_step_callback()
 
     async def async_step_callback(self, user_input=None):
         errors = {}
