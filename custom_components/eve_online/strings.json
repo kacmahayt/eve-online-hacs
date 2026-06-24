@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "EVE Online — Application Credentials",
-        "description": "Enter your EVE Online application credentials.\n\n**Client ID is pre-filled**.\n\n**Client Secret is optional** — if you leave it blank, the integration uses a secure Cloudflare Worker proxy for OAuth.\n\nIf you want to provide your own credentials:\n1. Go to https://developers.eveonline.com/\n2. Create Application → Callback URL: http://localhost/callback\n3. Select scopes (see README)\n4. Copy Client Secret here",
+        "description": "Enter your EVE Online application credentials.\n\n**Client ID is pre-filled**.\n\n**Client Secret is optional** — if you leave it blank, the integration uses a secure Cloudflare Worker proxy for OAuth.\n\nIf you want to provide your own credentials:\n1. Go to https://developers.eveonline.com/\n2. Create Application → Callback URL: https://eve-oauth-proxy.sergrudzik.workers.dev/callback\n3. Select scopes (see README)\n4. Copy Client Secret here",
         "data": {
           "client_id": "Client ID",
           "client_secret": "Client Secret"
@@ -11,7 +11,7 @@
       },
       "callback": {
         "title": "Authorize EVE Online",
-        "description": "1. **Click the link below** to authorize with EVE Online:\n\n{auth_url}\n\n2. Log in with your EVE account\n\n3. After authorization, your browser will redirect to **http://localhost/callback** — the page will fail to load (this is normal)\n\n4. **Copy the ENTIRE URL from your browser's address bar** and paste it below",
+        "description": "1. **Click the link below** to authorize with EVE Online:\n\n{auth_url}\n\n2. Log in with your EVE account\n\n3. After authorization, your browser will redirect to **https://eve-oauth-proxy.sergrudzik.workers.dev/callback** — you will see a success page\n\n4. **Copy the ENTIRE URL from your browser's address bar** and paste it below",
         "data": {
           "callback_url": "Pasted callback URL"
         }

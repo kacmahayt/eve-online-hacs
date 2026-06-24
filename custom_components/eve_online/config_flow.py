@@ -47,7 +47,7 @@ class EVEOnlineConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 params = {
                     "response_type": "code",
                     "client_id": self._client_id,
-                    "redirect_uri": "http://localhost/callback",
+                    "redirect_uri": "https://eve-oauth-proxy.sergrudzik.workers.dev/callback",
                     "scope": " ".join(SCOPES),
                     "state": self._state,
                     "code_challenge": code_challenge,
