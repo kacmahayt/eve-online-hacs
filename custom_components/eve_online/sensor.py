@@ -146,13 +146,15 @@ class EVESPSensor(EVEBaseSensor):
     @property
     def native_value(self):
         skills = self.coordinator.data.get("skills", {})
-        return skills.get("total_sp", 0)
+        total = skills.get("total_sp", 0)
+        unallocated = skills.get("unallocated_sp", 0)
+        return total + unallocated
 
     @property
     def extra_state_attributes(self):
         skills = self.coordinator.data.get("skills", {})
         return {
-            "total_sp_formatted": f"{skills.get('total_sp', 0):,} SP",
+            "total_sp_formatted": f"{(skills.get('total_sp', 0) + skills.get('unallocated_sp', 0)):,} SP",
             "unallocated_sp": skills.get("unallocated_sp", 0),
         }
 
