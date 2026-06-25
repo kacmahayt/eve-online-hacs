@@ -18,6 +18,8 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         EVECharacterSensor(coordinator),
         EVEWalletSensor(coordinator),
         EVESPSensor(coordinator),
+        EVEInvestedSPSensor(coordinator),
+        EVEFreeSPSensor(coordinator),
         EVESkillQueueSensor(coordinator),
         EVEMarketOrdersSensor(coordinator),
         EVECorporationSensor(coordinator),
@@ -157,6 +159,40 @@ class EVESPSensor(EVEBaseSensor):
             "total_sp_formatted": f"{(skills.get('total_sp', 0) + skills.get('unallocated_sp', 0)):,} SP",
             "unallocated_sp": skills.get("unallocated_sp", 0),
         }
+
+
+class EVEInvestedSPSensor(EVEBaseSensor):
+    """Invested SP sensor - SP already spent on skills."""
+
+    _attr_name = "EVE Invested SP"
+    _attr_icon = "mdi:brain"
+    _attr_native_unit_of_measurement = "SP"
+
+    def __init__(self, coordinator):
+        super().__init__(coordinator)
+        self._attr_unique_id = f"{coordinator.character_id}_invested_sp"
+
+    @property
+    def native_value(self):
+        skills = self.coordinator.data.get("skills", {})
+        return skills.get("total_sp", 0)
+
+
+class EVEFreeSPSensor(EVEBaseSensor):
+    """Free SP sensor - unallocated skill points."""
+
+    _attr_name = "EVE Free SP"
+    _attr_icon = "mdi:brain"
+    _attr_native_unit_of_measurement = "SP"
+
+    def __init__(self, coordinator):
+        super().__init__(coordinator)
+        self._attr_unique_id = f"{coordinator.character_id}_free_sp"
+
+    @property
+    def native_value(self):
+        skills = self.coordinator.data.get("skills", {})
+        return skills.get("unallocated_sp", 0)
 
 
 class EVESkillQueueSensor(EVEBaseSensor):
